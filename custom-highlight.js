@@ -45,7 +45,7 @@ jQuery(document).ready(function ($) {
       var r_color = '#' + Math.random().toString(16).slice(2, 8);
       $("#" + curr_span_id).css('color', r_color);
       $("#" + curr_span_id).tooltipster({
-          content: 'Test',
+          content: 'a quick test of the tooltip on ' + curr_span_id,
           multiple: true,
           position: top
       });
