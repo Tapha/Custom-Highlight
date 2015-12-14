@@ -34,10 +34,6 @@ function add_cs_class(s_text) {
 }
 
 jQuery(document).ready(function ($) {
-//   $('p contenteditable').tooltipster({
-//           multiple: true,
-//           position: top
-//   });
   
   $('div,p').mouseup(function (e) {
     if (getSelectedText() != "") {
