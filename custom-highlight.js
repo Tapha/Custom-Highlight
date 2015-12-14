@@ -20,7 +20,7 @@ function add_cs_class(s_text) {
     // How do I add a span around the selected text?
     
     var span = document.createElement('SPAN');
-    span.textContent = selection_text;
+    span.textContent = " + " + selection_text + " + ";
     span.classList.add("cs-editing");
   
     var range = selection.getRangeAt(0);
