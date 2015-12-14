@@ -29,16 +29,27 @@ function add_cs_class(s_text) {
   
     var custom_hash_1 = Math.random().toString(36).slice(2);
     span.id = "cs-editing-" + custom_hash_1;
-    $(span.id).tooltipster('show');
+    
     return span.id;
 }
 
 jQuery(document).ready(function ($) {
+//   $('p contenteditable').tooltipster({
+//           multiple: true,
+//           position: top
+//   });
   
   $('div,p').mouseup(function (e) {
     if (getSelectedText() != "") {
       curr_span_id = add_cs_class(getSelectedText());
-      console.log(curr_span_id);
+      var r_color = '#' + Math.random().toString(16).slice(2, 8);
+      $("#" + curr_span_id).css('color', r_color);
+      $("#" + curr_span_id).tooltipster({
+          content: 'Test',
+          multiple: true,
+          position: top
+      });
+
     }
   });
 });
