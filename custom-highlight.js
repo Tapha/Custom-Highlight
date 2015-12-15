@@ -42,9 +42,9 @@ jQuery(document).ready(function ($) {
       var r_color = '#' + Math.random().toString(16).slice(2, 8);
       $("#" + curr_span_id).css('color', r_color);
       $("#" + curr_span_id).tooltipster({
-          content: '<button type="button" class="btn btn-success btn-sm">Small button</button>',
+          content: '<button type="button" class="btn">Small button</button> <button type="button" class="btn">Small button 2</button> <button type="button" class="btn">Small button 3</button> <button type="button" class="btn">Small button 4</button>',
           multiple: true,
-          position: 'top',
+          position: 'left',
           delay: 100,
           maxWidth: 500,
           speed: 300,
