@@ -22,6 +22,7 @@ function add_cs_class(s_text) {
     var span = document.createElement('SPAN');
     span.textContent = " + " + selection_text + " + ";
     span.classList.add("cs-editing");
+    span.classList.add("tooltip");
   
     var range = selection.getRangeAt(0);
     range.deleteContents();
@@ -41,11 +42,17 @@ jQuery(document).ready(function ($) {
       var r_color = '#' + Math.random().toString(16).slice(2, 8);
       $("#" + curr_span_id).css('color', r_color);
       $("#" + curr_span_id).tooltipster({
-          content: 'a quick test of the tooltip on ' + curr_span_id,
+          content: '<button type="button" class="btn btn-success btn-sm">Small button</button>',
           multiple: true,
-          position: top
-      });
-
+          position: 'top',
+          delay: 100,
+          maxWidth: 500,
+          speed: 300,
+          interactive: true,          
+          animation: 'grow',
+          trigger: 'hover',
+          contentAsHTML: true
+    });
     }
   });
 });
