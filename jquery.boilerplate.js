@@ -52,9 +52,11 @@
 						  mouseY = e.pageY - 10;
 						});
 
+						var self = this;
+
 						$(this.element).mouseup(function (e) {
-						    if (this.getSelectedText() != "") {
-						      curr_span_id = this.add_cs_class(this.getSelectedText());
+						    if (self.getSelectedText() != "") {
+						      var curr_span_id = self.add_cs_class(self.getSelectedText());
 						      var r_color = '#' + Math.random().toString(16).slice(2, 8);
 						      $("#" + curr_span_id).css('color', r_color);
 
@@ -113,7 +115,7 @@
 				},
 				getSelectedText: function () {
 						// some logic
-						t = (document.all) ? document.selection.createRange().text : document.getSelection();
+						var t = (document.all) ? document.selection.createRange().text : document.getSelection();
  						return t;
 				},
 				add_cs_class: function (s_text) {
