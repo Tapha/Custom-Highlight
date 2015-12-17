@@ -16,7 +16,9 @@
 		// Create the defaults once
 		var pluginName = "customHighlight",
 				defaults = {
-					actions: [{"Test action"}]
+					actions: [{"test_action":"Test action"}],
+					position: left
+
 		};
 
 		// The actual plugin constructor
@@ -57,8 +59,10 @@
 						      $("#" + curr_span_id).css('color', r_color);
 
 						      //Get actions
-						      var all_actions = this._defaults;
+						      var p_defaults = JSON.parse(this._defaults);
 
+						      var all_actions = p_defaults.actions;
+						      
 						      //Check number of objects within json array. If more than one then remove the default and proceed to iterate through the actions to create the relevant buttons.
 						      num_of_objects = Object.keys(all_actions).length;
 
@@ -69,13 +73,13 @@
 								 var arr = [];
 
 									for(var x in parsed){
-									  if (x != "Test action")
+									  if (x != "test_action")
 									  {
 									  	arr.push(parsed[x]);
 
 									  	var buttons;
 									  	for (var i in arr) {
-										  	buttons = buttons + '<button type="button" class="btn" onclick="' + arr[i] + '()">' + arr[i] + '</button> ';										  
+										  	buttons = buttons + '<button type="button" class="btn" onclick="' + i + '()">' + arr[i] + '</button> ';										  
 										}
 
 										//Set the buttons
@@ -87,13 +91,13 @@
 						      else
 						      {
 						      		//Set the buttons
-						      		var all_buttons = '<button type="button" class="btn">Test Action</button>';
+						      		var all_buttons = '<button type="button" class="btn" onclick="test_action">Test Action</button>';
 						      }						     
 
 						      $("#" + curr_span_id).tooltipster({
 						          content: all_buttons,
 						          multiple: true,
-						          position: 'left',
+						          position: this._defaults.position,
 						          delay: 100,
 						          maxWidth: 500,
 						          speed: 300,
