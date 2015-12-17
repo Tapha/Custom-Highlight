@@ -56,11 +56,42 @@
 						      var r_color = '#' + Math.random().toString(16).slice(2, 8);
 						      $("#" + curr_span_id).css('color', r_color);
 
-						      //Get user inputted data
+						      //Get actions
+						      var all_actions = this._defaults;
 
+						      //Check number of objects within json array. If more than one then remove the default and proceed to iterate through the actions to create the relevant buttons.
+						      num_of_objects = Object.keys(all_actions).length;
+
+						      if (num_of_objects > 1)
+						      {
+						      	 var parsed = JSON.parse(all_actions);
+
+								 var arr = [];
+
+									for(var x in parsed){
+									  if (x != "Test action")
+									  {
+									  	arr.push(parsed[x]);
+
+									  	var buttons;
+									  	for (var i in arr) {
+										  	buttons = buttons + '<button type="button" class="btn" onclick="' + arr[i] + '()">' + arr[i] + '</button> ';										  
+										}
+
+										//Set the buttons
+						      			var all_buttons = buttons;
+
+									  }									  
+									}
+						      }	
+						      else
+						      {
+						      		//Set the buttons
+						      		var all_buttons = '<button type="button" class="btn">Test Action</button>';
+						      }						     
 
 						      $("#" + curr_span_id).tooltipster({
-						          content: '<button type="button" class="btn">Action 1</button> <button type="button" class="btn">Action 2</button> <button type="button" class="btn">Action 3</button> <button type="button" class="btn">Action 4</button>',
+						          content: all_buttons,
 						          multiple: true,
 						          position: 'left',
 						          delay: 100,
