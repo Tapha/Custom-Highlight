@@ -60,13 +60,10 @@
 						      var r_color = '#' + Math.random().toString(16).slice(2, 8);
 						      $("#" + curr_span_id).css('color', r_color);
 
-						      //Get actions
-						      var p_defaults = JSON.parse(this._defaults);
-
-						      var all_actions = p_defaults.actions;
-
 						      //Check number of objects within json array. If more than one then remove the default and proceed to iterate through the actions to create the relevant buttons.
-						      num_of_objects = Object.keys(all_actions).length;
+						      var num_of_objects = self._defaults.actions.length;
+
+						      var all_actions = self._defaults.actions;
 
 						      if (num_of_objects > 1)
 						      {
@@ -99,7 +96,7 @@
 						      $("#" + curr_span_id).tooltipster({
 						          content: all_buttons,
 						          multiple: true,
-						          position: this._defaults.position,
+						          position: self._defaults.position,
 						          delay: 100,
 						          maxWidth: 500,
 						          speed: 300,
