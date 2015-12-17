@@ -3,7 +3,7 @@
 <head>
   <link rel="stylesheet" type="text/css" href="css/tooltipster.css">
   <link rel="stylesheet" type="text/css" href="css/custom.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+  <script src="js/jquery-2.1.4.min.js"></script>
   <script src="js/jquery.tooltipster.min.js"></script> 
   <meta charset="utf-8">
   <title>Custom Highlight</title>
@@ -23,6 +23,12 @@ Bacon ipsum dolor amet leberkas andouille frankfurter jerky strip steak, pastram
   oin chuck filet mignon flank picanha swine.
   <br>
 </p>
-  <script src="custom-highlight.js"></script>
+  <!--<script src="custom-highlight.js"></script>-->
+  <script src="jquery.boilerplate.js"></script>
+  <script type="text/javascript">
+  $( document ).ready(function() {
+      $('div,p').customHighlight();
+   });    
+  </script>
   </body>
 </html>

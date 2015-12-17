@@ -17,7 +17,7 @@
 		var pluginName = "customHighlight",
 				defaults = {
 					actions: [{"test_action":"Test action"}],
-					position: left
+					position: "left"
 
 		};
 
@@ -62,7 +62,7 @@
 						      var p_defaults = JSON.parse(this._defaults);
 
 						      var all_actions = p_defaults.actions;
-						      
+
 						      //Check number of objects within json array. If more than one then remove the default and proceed to iterate through the actions to create the relevant buttons.
 						      num_of_objects = Object.keys(all_actions).length;
 
