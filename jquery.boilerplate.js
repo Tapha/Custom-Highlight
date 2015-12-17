@@ -65,32 +65,35 @@
 
 						      var all_actions = self._defaults.actions;
 
-						      if (num_of_objects > 1)
+						      var first;	
+						      for (var key in all_actions[0]) {
+						      	 //Get first object
+						         first = key;
+							  }
+
+						      if (first != "test_action")
 						      {
-						      	 var parsed = JSON.parse(all_actions);
+						      	 //var parsed = JSON.parse(all_actions);
 
 								 var arr = [];
 
-									for(var x in parsed){
-									  if (x != "test_action")
-									  {
-									  	arr.push(parsed[x]);
+									for(var x in all_actions){
+									  	
+									  	arr.push(all_actions[x]);
 
 									  	var buttons;
 									  	for (var i in arr) {
-										  	buttons = buttons + '<button type="button" class="btn" onclick="' + i + '()">' + arr[i] + '</button> ';										  
+										  	buttons = buttons + "<button type='button' class='btn' onclick='"+ i + "('" + curr_span_id + "')>" + arr[i] + "</button>";										  
 										}
-
+										console.log(arr);	
 										//Set the buttons
-						      			var all_buttons = buttons;
-
-									  }									  
+						      			var all_buttons = buttons;								  
 									}
 						      }	
 						      else
 						      {
 						      		//Set the buttons
-						      		var all_buttons = '<button type="button" class="btn" onclick="test_action">Test Action</button>';
+						      		var all_buttons = "<button type='button' class='btn' onclick=test_action('" + curr_span_id + "')>Test Action</button>";
 						      }						     
 
 						      $("#" + curr_span_id).tooltipster({
@@ -135,6 +138,9 @@
 					    span.id = "cs-editing-" + custom_hash_1;
 					    
 					    return span.id;
+				},
+				test_action: function () {
+						alert("Here's a Test Action!");
 				}	
 		});
 
