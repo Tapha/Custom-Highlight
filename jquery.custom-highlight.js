@@ -70,7 +70,7 @@
 						      for (var key in all_actions[0]) {
 						      	 //Get first object
 						         first = key;
-						         //console.log(first);
+						         
 							  }
 
 						      if (first == "test_action")
