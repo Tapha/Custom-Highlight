@@ -39,7 +39,6 @@ Just set up your buttons in the properties section, with the corresponding the f
 
 Then just add your own custom functions within a script tag at the top of the page like so, and they will automatically become buttons that link to these functions:
 
-```javascript
 function newff(span_id) {
         alert("Hello everybody! " + span_id);
 }
