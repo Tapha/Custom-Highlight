@@ -45,6 +45,7 @@ function newff(span_id) {
         alert("Hello everybody! " + span_id);
 }
 ```
+The highlighted text is then available through its ID, which is passed into your custom function when specified, as seen above.
 
 ## Contributing
 
