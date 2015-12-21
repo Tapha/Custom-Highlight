@@ -2,6 +2,8 @@
 
 Custom Highlight is a simple jQuery plugin that allows you to build your own custom text highlight actions. Like the wysiwig you see on the Medium editor.
 
+A quick preview can be found here: [Preview Link](https://htmlpreview.github.io/?https://github.com/Tapha/Custom-Highlight/blob/master/home.html)
+
 ## Installation
 
 1. Download all of the files. 
