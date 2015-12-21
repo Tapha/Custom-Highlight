@@ -61,19 +61,24 @@
 						      $("#" + curr_span_id).css('color', r_color);
 
 						      //Check number of objects within json array. If more than one then remove the default and proceed to iterate through the actions to create the relevant buttons.
-						      var num_of_objects = self._defaults.actions.length;
+						      var num_of_objects = self.settings.actions.length;
 
-						      var all_actions = self._defaults.actions;
+						      var all_actions = self.settings.actions; 
 
 						      var first;	
 						      for (var key in all_actions[0]) {
 						      	 //Get first object
 						         first = key;
+						         //console.log(first);
 							  }
 
-						      if (first != "test_action")
+						      if (first == "test_action")
 						      {
-						      	 //var parsed = JSON.parse(all_actions);
+						      	 //Set the buttons
+						      	 var all_buttons = "<button type='button' class='btn' onclick=test_action('" + curr_span_id + "')>Test Action</button>";
+						      }	
+						      else
+						      {
 
 								 var arr = [];
 
@@ -89,11 +94,7 @@
 										//Set the buttons
 						      			var all_buttons = buttons;								  
 									}
-						      }	
-						      else
-						      {
-						      		//Set the buttons
-						      		var all_buttons = "<button type='button' class='btn' onclick=test_action('" + curr_span_id + "')>Test Action</button>";
+						      		
 						      }						     
 
 						      $("#" + curr_span_id).tooltipster({
