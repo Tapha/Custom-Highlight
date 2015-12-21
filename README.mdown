@@ -1,4 +1,4 @@
-# ${1:Custom Highlight}
+# Custom Highlight
 
 Custom Highlight is a simple jQuery plugin that allows you to build your own custom text highlight actions. Like the wysiwig you see on the Medium editor.
 
