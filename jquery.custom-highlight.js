@@ -94,7 +94,7 @@
 									  		var the_ch_function_name = Object.keys(but_array)[0];
 									  		var the_ch_value_name = but_array[the_ch_function_name];
 
-										  	buttons = buttons + "<button type='button' class='btn' onclick="+ the_ch_function_name + "('" + curr_span_id_for_use + "')>" + the_ch_value_name + "</button> ";
+										  	buttons = buttons + "<button type='button' class='btn' onclick="+ the_ch_function_name + "('" + curr_span_id_for_use + "')>" + the_ch_value_name + "</button>" + " ";
 										  
 										}
 											
