@@ -57,6 +57,7 @@
 						$(this.element).mouseup(function (e) {
 						    if (self.getSelectedText() != "") {
 						      var curr_span_id = self.add_cs_class(self.getSelectedText());
+						      var curr_span_id_for_use = '#' + curr_span_id;
 						      var r_color = '#' + Math.random().toString(16).slice(2, 8);
 						      $("#" + curr_span_id).css('color', r_color);
 
@@ -75,7 +76,7 @@
 						      if (first == "test_action")
 						      {
 						      	 //Set the buttons
-						      	 var all_buttons = "<button type='button' class='btn' onclick=test_action('" + curr_span_id + "')>Test Action</button>";
+						      	 var all_buttons = "<button type='button' class='btn' onclick=test_action('" + curr_span_id_for_use + "')>Test Action</button>";
 						      }	
 						      else
 						      {
@@ -86,11 +87,17 @@
 									  	
 									  	arr.push(all_actions[x]);
 
-									  	var buttons;
+									  	var buttons = '';
+									  	
 									  	for (var i in arr) {
-										  	buttons = buttons + "<button type='button' class='btn' onclick='"+ i + "('" + curr_span_id + "')>" + arr[i] + "</button>";										  
+									  		var but_array = arr[i];
+									  		var the_ch_function_name = Object.keys(but_array)[0];
+									  		var the_ch_value_name = but_array[the_ch_function_name];
+
+										  	buttons = buttons + "<button type='button' class='btn' onclick="+ the_ch_function_name + "('" + curr_span_id_for_use + "')>" + the_ch_value_name + "</button> ";
+										  
 										}
-										console.log(arr);	
+											
 										//Set the buttons
 						      			var all_buttons = buttons;								  
 									}
@@ -100,7 +107,7 @@
 						      $("#" + curr_span_id).tooltipster({
 						          content: all_buttons,
 						          multiple: true,
-						          position: self._defaults.position,
+						          position: self.settings.position,
 						          delay: 100,
 						          maxWidth: 500,
 						          speed: 300,
