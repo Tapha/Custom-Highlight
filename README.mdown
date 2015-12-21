@@ -67,6 +67,10 @@ jQuery - [https://jquery.com/](https://jquery.com/)
 
 Tooltipster - [http://iamceege.github.io/tooltipster/](http://iamceege.github.io/tooltipster/)
 
+##TO DO
+
+- Add ability to remove text coloring.
+
 ## License
 
 Apache License
