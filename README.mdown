@@ -1,0 +1,68 @@
+# ${1:Custom Highlight}
+
+Custom Highlight is a simple jQuery plugin that allows you to build your own custom text highlight actions. Like the wysiwig you see on the Medium editor.
+
+## Installation
+
+1. Download all of the files. 
+2. Include the dependencies, which can be found in the /css & /js folders.
+3. Include the jquery.custom-highlight.js file.
+4. Initialise the Custom-Highlight function like so:
+
+```javascript
+ $('div,p').customHighlight({
+           actions: [{"newff":"New F"}, {"hewff":"Hew F"}],
+           position: "left"
+});
+```
+Making sure to set your custom buttons (function to call on the left, button name on the right) and tooltip position as properties, as can be seen above.
+
+5. Add your own custom functions within a script tag at the top of the page like so:
+
+```javascript
+function newff(span_id) {
+        alert("Hello everybody! " + span_id);
+}
+```
+
+6. That's it!
+
+
+## Usage
+
+Just set up your buttons in the properties section, with the corresponding the function names and button text, as seen below (function to call on the left, button name on the right).
+
+```javascript
+ $('div,p').customHighlight({
+           actions: [{"newff":"New F"}, {"hewff":"Hew F"}]
+});
+
+Then just add your own custom functions within a script tag at the top of the page like so, and they will automatically become buttons that link to these functions:
+
+```javascript
+function newff(span_id) {
+        alert("Hello everybody! " + span_id);
+}
+```
+
+## Contributing
+
+1. Fork it!
+2. Create your feature branch: `git checkout -b my-new-feature`
+3. Commit your changes: `git commit -am 'Add some feature'`
+4. Push to the branch: `git push origin my-new-feature`
+5. Submit a pull request :D
+
+## History
+
+v0.1 released (21/12/2015)
+
+## Credits
+
+jQuery - [https://jquery.com/](https://jquery.com/)
+
+Tooltipster - [http://iamceege.github.io/tooltipster/](http://iamceege.github.io/tooltipster/)
+
+## License
+
+TODO: Write license
