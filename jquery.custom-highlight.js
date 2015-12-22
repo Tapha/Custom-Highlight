@@ -56,127 +56,92 @@
 
 						var self = this;
 
-						// This timeout, started on mousedown, triggers the beginning of a hold
-						var holdStarter = null;
-
-						// This is how many milliseconds to wait before recognizing a hold
-						var holdDelay = 200;
-
-						// This flag indicates the user is currently holding the mouse down
-						var holdActive = false;
-
-						// MouseDown
-						$(this.element).mousedown(onMouseDown);
-						function onMouseDown(){
-						    // Do not take any immediate action - just set the holdStarter
-						    //  to wait for the predetermined delay, and then begin a hold
-						    holdStarter = setTimeout(function() {
-								holdStarter = null;
-								holdActive = true;
-								// begin hold-only operation here, if desired
-						        // $('.status').text('holding...');
-							}, holdDelay);
-						}
-
 						$(this.element).mouseup(function (e) {
-							// If the mouse is released immediately (i.e., a click), before the
-						    //  holdStarter runs, then cancel the holdStarter and do the click
-							if (holdStarter) {
-								clearTimeout(holdStarter);
-								// run click-only operation here
-						        //$('.status').text('Clicked!');
-							}
-						    // Otherwise, if the mouse was being held, end the hold
-							else if (holdActive) {
-								holdActive = false;
-								// end hold-only operation here, if desired
-						        
-						        //start here
-						        if (self.getSelectedText() != "") {
-								      var curr_span_id = self.add_cs_class(self.getSelectedText());
-								      var curr_span_id_for_use = '#' + curr_span_id;
+						    if (self.getSelectedText() != "") {
+						      var curr_span_id = self.add_cs_class(self.getSelectedText());
+						      var curr_span_id_for_use = '#' + curr_span_id;
 
-								      //Check settings and apply colors if needed.
-								      if (self.settings.textcolor == "on")
-								      {
-								      	  var r_color = '#' + Math.random().toString(16).slice(2, 8);
-								      	  $("#" + curr_span_id).css('color', r_color);
-								      }
-								      
-									  if (self.settings.backgroundcolor == "on")
-									  {
-									  	 var b_color = '#' + Math.random().toString(16).slice(2, 8);
+						      //Check settings and apply colors if needed.
+						      if (self.settings.textcolor == "on")
+						      {
+						      	  var r_color = '#' + Math.random().toString(16).slice(2, 8);
+						      	  $("#" + curr_span_id).css('color', r_color);
+						      }
+						      
+							  if (self.settings.backgroundcolor == "on")
+							  {
+							  	 var b_color = '#' + Math.random().toString(16).slice(2, 8);
 
-									  	  if (r_color != b_color)
-										  {
-										  			//Add classes to element for checking
+							  	  if (r_color != b_color)
+								  {
+								  			//Add classes to element for checking
 
-										  			$( "#" + curr_span_id ).add( ".light" ).css( "color", "#3A393C" );
-										  			$( "#" + curr_span_id ).add( ".dark" ).css( "color", "#FBFBFB" );
+								  			$( "#" + curr_span_id ).add( ".light" ).css( "color", "#3A393C" );
+								  			$( "#" + curr_span_id ).add( ".dark" ).css( "color", "#FBFBFB" );
 
-										  			//Assign the element a background color
+								  			//Assign the element a background color
 
-										  			$("#" + curr_span_id).css('background-color', b_color);
+								  			$("#" + curr_span_id).css('background-color', b_color);
 
-											  		// Target your element
+									  		// Target your element
 
-			    									$("#" + curr_span_id).colourBrightness();
-										  }
-										  else {
-										  		var b_color = '#' + Math.random().toString(16).slice(2, 8);
+	    									$("#" + curr_span_id).colourBrightness();
+								  }
+								  else {
+								  		var b_color = '#' + Math.random().toString(16).slice(2, 8);
 
-										  		//Add classes to element for checking
+								  		//Add classes to element for checking
 
-									  			$( "#" + curr_span_id ).add( ".light" ).css( "color", "#3A393C" );
-									  			$( "#" + curr_span_id ).add( ".dark" ).css( "color", "#FBFBFB" );
+							  			$( "#" + curr_span_id ).add( ".light" ).css( "color", "#3A393C" );
+							  			$( "#" + curr_span_id ).add( ".dark" ).css( "color", "#FBFBFB" );
 
-									  			//Assign the element a background color
-									  			
-										  		$("#" + curr_span_id).css('background-color', b_color);
+							  			//Assign the element a background color
+							  			
+								  		$("#" + curr_span_id).css('background-color', b_color);
 
-										  		// Target your element
+								  		// Target your element
 
-			    								$("#" + curr_span_id).colourBrightness();
-										  }	
-									  }								  							      
+	    								$("#" + curr_span_id).colourBrightness();
+								  }	
+							  }								  							      
 
-								      //Check number of objects within json array. If more than one then remove the default and proceed to iterate through the actions to create the relevant buttons.
-								      var num_of_objects = self.settings.actions.length;
+						      //Check number of objects within json array. If more than one then remove the default and proceed to iterate through the actions to create the relevant buttons.
+						      var num_of_objects = self.settings.actions.length;
 
-								      var all_actions = self.settings.actions; 
+						      var all_actions = self.settings.actions; 
 
-								      var first;	
-								      for (var key in all_actions[0]) {
-								      	 //Get first object
-								         first = key;
-								         
-									  }
+						      var first;	
+						      for (var key in all_actions[0]) {
+						      	 //Get first object
+						         first = key;
+						         
+							  }
 
-								      if (first == "test_action")
-								      {
-								      	 //Set the buttons
-								      	 var all_buttons = "<button type='button' class='btn' onclick=test_action('" + curr_span_id_for_use + "')>Test Action</button>";
-								      }	
-								      else
-								      {
+						      if (first == "test_action")
+						      {
+						      	 //Set the buttons
+						      	 var all_buttons = "<button type='button' class='btn' onclick=test_action('" + curr_span_id_for_use + "')>Test Action</button>";
+						      }	
+						      else
+						      {
 
-										 var arr = [];
+								 var arr = [];
 
-											for(var x in all_actions){
-											  	
-											  	arr.push(all_actions[x]);
+									for(var x in all_actions){
+									  	
+									  	arr.push(all_actions[x]);
 
-											  	var buttons = '';
-											  	
-											  	for (var i in arr) {
-											  		var but_array = arr[i];
-											  		var the_ch_function_name = Object.keys(but_array)[0];
-											  		var the_ch_value_name = but_array[the_ch_function_name];
+									  	var buttons = '';
+									  	
+									  	for (var i in arr) {
+									  		var but_array = arr[i];
+									  		var the_ch_function_name = Object.keys(but_array)[0];
+									  		var the_ch_value_name = but_array[the_ch_function_name];
 
-												  	buttons = buttons + "<button type='button' class='btn' onclick="+ the_ch_function_name + "('" + curr_span_id_for_use + "')>" + the_ch_value_name + "</button>" + " ";
-												  
-												}
-													
+										  	buttons = buttons + "<button type='button' class='btn' onclick="+ the_ch_function_name + "('" + curr_span_id_for_use + "')>" + the_ch_value_name + "</button>" + " ";
+										  
+										}
+											
 										//Set the buttons
 						      			var all_buttons = buttons;								  
 									}
@@ -196,12 +161,6 @@
 						          contentAsHTML: true
 						    });
 						    }
-
-
-						        //end here
-							}	
-
-						    
 						  });
 
 
