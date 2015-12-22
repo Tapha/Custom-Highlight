@@ -17,7 +17,9 @@
 		var pluginName = "customHighlight",
 				defaults = {
 					actions: [{"test_action":"Test action"}],
-					position: "left"
+					position: "left",
+					textcolor: "on",
+					backgroundcolor: "off"
 
 		};
 
@@ -58,8 +60,50 @@
 						    if (self.getSelectedText() != "") {
 						      var curr_span_id = self.add_cs_class(self.getSelectedText());
 						      var curr_span_id_for_use = '#' + curr_span_id;
-						      var r_color = '#' + Math.random().toString(16).slice(2, 8);
-						      $("#" + curr_span_id).css('color', r_color);
+
+						      //Check settings and apply colors if needed.
+						      if (self.settings.textcolor == "on")
+						      {
+						      	  var r_color = '#' + Math.random().toString(16).slice(2, 8);
+						      	  $("#" + curr_span_id).css('color', r_color);
+						      }
+						      
+							  if (self.settings.backgroundcolor == "on")
+							  {
+							  	 var b_color = '#' + Math.random().toString(16).slice(2, 8);
+
+							  	  if (r_color != b_color)
+								  {
+								  			//Add classes to element for checking
+
+								  			$( "#" + curr_span_id ).add( ".light" ).css( "color", "#3A393C" );
+								  			$( "#" + curr_span_id ).add( ".dark" ).css( "color", "#FBFBFB" );
+
+								  			//Assign the element a background color
+
+								  			$("#" + curr_span_id).css('background-color', b_color);
+
+									  		// Target your element
+
+	    									$("#" + curr_span_id).colourBrightness();
+								  }
+								  else {
+								  		var b_color = '#' + Math.random().toString(16).slice(2, 8);
+
+								  		//Add classes to element for checking
+
+							  			$( "#" + curr_span_id ).add( ".light" ).css( "color", "#3A393C" );
+							  			$( "#" + curr_span_id ).add( ".dark" ).css( "color", "#FBFBFB" );
+
+							  			//Assign the element a background color
+							  			
+								  		$("#" + curr_span_id).css('background-color', b_color);
+
+								  		// Target your element
+
+	    								$("#" + curr_span_id).colourBrightness();
+								  }	
+							  }								  							      
 
 						      //Check number of objects within json array. If more than one then remove the default and proceed to iterate through the actions to create the relevant buttons.
 						      var num_of_objects = self.settings.actions.length;
