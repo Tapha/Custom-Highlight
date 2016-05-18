@@ -4,6 +4,8 @@ Custom Highlight is a simple jQuery plugin that allows you to build your own cus
 
 A quick preview can be found here: [Preview Link](https://htmlpreview.github.io/?https://github.com/Tapha/Custom-Highlight/blob/master/home.html)
 
+Featured on: [JavaScript Weekly](http://javascriptweekly.com/issues/268), [Web Tools Weekly](http://webtoolsweekly.com/archives/issue-132/), [Javascript Digest](https://twitter.com/JavaScriptDaily/status/694100656324485120), [SitePoint JS](https://twitter.com/SitePointJS/status/693482073206714372), [Hacker News](https://news.ycombinator.com/item?id=10952496) & [Reddit](https://www.reddit.com/r/javascript/comments/3xox8m/custom_highlight_an_open_source_jquery_plugin/).
+
 ## Installation
 
 1. Download all of the files. 
