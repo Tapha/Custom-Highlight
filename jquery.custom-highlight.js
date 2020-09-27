@@ -178,7 +178,8 @@
 					    // Add a span around the selected text, along with a class and an ID
 					    
 					    var span = document.createElement('SPAN');
-					    span.textContent = " + " + selection_text + " + ";
+						//span.textContent = " + " + selection_text + " + ";
+						span.textContent = selection_text;
 					    span.classList.add("cs-editing");
 					    span.classList.add("tooltip");
 					  
