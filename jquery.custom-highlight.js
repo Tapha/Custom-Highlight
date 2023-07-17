@@ -1,209 +1,147 @@
-// the semi-colon before function invocation is a safety net against concatenated
-// scripts and/or other plugins which may not be closed properly.
-;(function ( $, window, document, undefined ) {
+;(function ($, window, document, undefined) {
 
-	"use strict";
+  "use strict";
 
-		// undefined is used here as the undefined global variable in ECMAScript 3 is
-		// mutable (ie. it can be changed by someone else). undefined isn't really being
-		// passed in so we can ensure the value of it is truly undefined. In ES5, undefined
-		// can no longer be modified.
+  const pluginName = "customHighlight",
+    defaults = {
+      actions: [{"test_action": "Test action"}],
+      position: "left",
+      textcolor: "on",
+      backgroundcolor: "off"
+    };
 
-		// window and document are passed through as local variable rather than global
-		// as this (slightly) quickens the resolution process and can be more efficiently
-		// minified (especially when both are regularly referenced in your plugin).
+  class Plugin {
+    constructor(element, options) {
+      this.element = element;
+      this.settings = $.extend({}, defaults, options);
+      this._defaults = defaults;
+      this._name = pluginName;
+      this.init();
+    }
 
-		// Create the defaults once
-		var pluginName = "customHighlight",
-				defaults = {
-					actions: [{"test_action":"Test action"}],
-					position: "left",
-					textcolor: "on",
-					backgroundcolor: "off"
+    init() {
+      let mouseX;
+      let mouseY;
 
-		};
+      $(document).mousemove(e => {
+        mouseX = e.pageX;
+        mouseY = e.pageY - 10;
+      });
 
-		// The actual plugin constructor
-		function Plugin ( element, options ) {
-				this.element = element;
-				// jQuery has an extend method which merges the contents of two or
-				// more objects, storing the result in the first object. The first object
-				// is generally empty as we don't want to alter the default options for
-				// future instances of the plugin
-				this.settings = $.extend( {}, defaults, options );
-				this._defaults = defaults;
-				this._name = pluginName;
-				this.init();
-		}
+      $(this.element).mouseup(e => this.handleMouseUp(e));
+    }
 
-		// Avoid Plugin.prototype conflicts
-		$.extend(Plugin.prototype, {
-				init: function () {
-						// Place initialization logic here
-						// You already have access to the DOM element and
-						// the options via the instance, e.g. this.element
-						// and this.settings
-						// you can add more functions like the one below and
-						// call them like so: this.yourOtherFunction(this.element, this.settings).
-						// retrieve the mouse coordinates if needed
-						var mouseX;
-						var mouseY;
+    handleMouseUp(e) {
+      const selectedText = this.getSelectedText();
 
-						jQuery(document).mousemove(function (e) {
-						  mouseX = e.pageX;
-						  mouseY = e.pageY - 10;
-						});
+      if (selectedText != "") {
+        const curr_span_id = this.add_cs_class(selectedText);
+        const $currSpanElement = $("#" + curr_span_id);
 
-						var self = this;
+        this.applyTextcolor($currSpanElement);
+        this.applyBackgroundcolor($currSpanElement, $currSpanElement.css('color'));
 
-						$(this.element).mouseup(function (e) {
-						    if (self.getSelectedText() != "") {
-						      var curr_span_id = self.add_cs_class(self.getSelectedText());
-						      var curr_span_id_for_use = '#' + curr_span_id;
+        this.applyActionsToElement($currSpanElement);
+      }
+    }
 
-						      //Check settings and apply colors if needed.
-						      if (self.settings.textcolor == "on")
-						      {
-						      	  var r_color = '#' + Math.random().toString(16).slice(2, 8);
-						      	  $("#" + curr_span_id).css('color', r_color);
-						      }
-						      
-							  if (self.settings.backgroundcolor == "on")
-							  {
-							  	 var b_color = '#' + Math.random().toString(16).slice(2, 8);
+    getSelectedText() {
+      return (document.all) ? document.selection.createRange().text : document.getSelection();
+    }
 
-							  	  if (r_color != b_color)
-								  {
-								  			//Add classes to element for checking
+    applyTextcolor($element) {
+      if (this.settings.textcolor == "on") {
+        const r_color = '#' + Math.random().toString(16).slice(2, 8);
+        $element.css('color', r_color);
+      }
+    }
 
-								  			$( "#" + curr_span_id ).add( ".light" ).css( "color", "#3A393C" );
-								  			$( "#" + curr_span_id ).add( ".dark" ).css( "color", "#FBFBFB" );
+    applyBackgroundcolor($element, r_color) {
+      if (this.settings.backgroundcolor == "on") {
+        let b_color = '#' + Math.random().toString(16).slice(2, 8);
 
-								  			//Assign the element a background color
+        if (r_color == b_color) {
+          b_color = '#' + Math.random().toString(16).slice(2, 8);
+        }
 
-								  			$("#" + curr_span_id).css('background-color', b_color);
+        $element.addClass(".light").css("color", "#3A393C");
+        $element.addClass(".dark").css("color", "#FBFBFB");
 
-									  		// Target your element
+        $element.css('background-color', b_color);
 
-	    									$("#" + curr_span_id).colourBrightness();
-								  }
-								  else {
-								  		var b_color = '#' + Math.random().toString(16).slice(2, 8);
+        $element.colourBrightness();
+      }
+    }
 
-								  		//Add classes to element for checking
+    applyActionsToElement($element) {
+      const all_actions = this.settings.actions;
+      let all_buttons = "";
 
-							  			$( "#" + curr_span_id ).add( ".light" ).css( "color", "#3A393C" );
-							  			$( "#" + curr_span_id ).add( ".dark" ).css( "color", "#FBFBFB" );
+      if (all_actions.length > 0) {
+        all_buttons = this.getButtonsFromActions(all_actions);
+      }
 
-							  			//Assign the element a background color
-							  			
-								  		$("#" + curr_span_id).css('background-color', b_color);
+      $element.tooltipster({
+        content: all_buttons,
+        multiple: true,
+        position: this.settings.position,
+        delay: 100,
+        maxWidth: 500,
+        speed: 300,
+        interactive: true,
+        animation: 'grow',
+        trigger: 'hover',
+        contentAsHTML: true
+      });
+    }
 
-								  		// Target your element
+    getButtonsFromActions(actions) {
+      const first = Object.keys(actions[0])[0];
+      let buttons = "";
 
-	    								$("#" + curr_span_id).colourBrightness();
-								  }	
-							  }								  							      
+      if (first == "test_action") {
+        buttons = "<button type='button' class='btn' onclick=test_action('" + curr_span_id_for_use + "')>Test Action</button>";
+      } else {
+        for (let action of actions) {
+          for (let key in action) {
+            buttons += "<button type='button' class='btn' onclick=" + key + "('" + curr_span_id_for_use + "')>" + action[key] + "</button> ";
+          }
+        }
+      }
 
-						      //Check number of objects within json array. If more than one then remove the default and proceed to iterate through the actions to create the relevant buttons.
-						      var num_of_objects = self.settings.actions.length;
+      return buttons;
+    }
 
-						      var all_actions = self.settings.actions; 
+    add_cs_class(s_text) {
+      const selection = s_text;
+      const selection_text = selection.toString();
+      const span = document.createElement('SPAN');
 
-						      var first;	
-						      for (var key in all_actions[0]) {
-						      	 //Get first object
-						         first = key;
-						         
-							  }
+      span.textContent = " + " + selection_text + " + ";
+      span.classList.add("cs-editing");
+      span.classList.add("tooltip");
 
-						      if (first == "test_action")
-						      {
-						      	 //Set the buttons
-						      	 var all_buttons = "<button type='button' class='btn' onclick=test_action('" + curr_span_id_for_use + "')>Test Action</button>";
-						      }	
-						      else
-						      {
+      const range = selection.getRangeAt(0);
+      range.deleteContents();
+      range.insertNode(span);
 
-								 var arr = [];
+      const custom_hash_1 = Math.random().toString(36).slice(2);
+      span.id = "cs-editing-" + custom_hash_1;
 
-									for(var x in all_actions){
-									  	
-									  	arr.push(all_actions[x]);
+      return span.id;
+    }
 
-									  	var buttons = '';
-									  	
-									  	for (var i in arr) {
-									  		var but_array = arr[i];
-									  		var the_ch_function_name = Object.keys(but_array)[0];
-									  		var the_ch_value_name = but_array[the_ch_function_name];
+    test_action() {
+      alert("Here's a Test Action!");
+    }
+  }
 
-										  	buttons = buttons + "<button type='button' class='btn' onclick="+ the_ch_function_name + "('" + curr_span_id_for_use + "')>" + the_ch_value_name + "</button>" + " ";
-										  
-										}
-											
-										//Set the buttons
-						      			var all_buttons = buttons;								  
-									}
-						      		
-						      }						     
+  $.fn[pluginName] = function (options) {
+    return this.each(function () {
+      if (!$.data(this, "plugin_" + pluginName)) {
+        $.data(this, "plugin_" + pluginName, new Plugin(this, options));
+      }
+    });
+  };
 
-						      $("#" + curr_span_id).tooltipster({
-						          content: all_buttons,
-						          multiple: true,
-						          position: self.settings.position,
-						          delay: 100,
-						          maxWidth: 500,
-						          speed: 300,
-						          interactive: true,          
-						          animation: 'grow',
-						          trigger: 'hover',
-						          contentAsHTML: true
-						    });
-						    }
-						  });
-
-
-				},
-				getSelectedText: function () {
-						// some logic
-						var t = (document.all) ? document.selection.createRange().text : document.getSelection();
- 						return t;
-				},
-				add_cs_class: function (s_text) {
-						// some logic
-						var selection = s_text;
-					    var selection_text = selection.toString();
-					    
-					    // Add a span around the selected text, along with a class and an ID
-					    
-					    var span = document.createElement('SPAN');
-					    span.textContent = " + " + selection_text + " + ";
-					    span.classList.add("cs-editing");
-					    span.classList.add("tooltip");
-					  
-					    var range = selection.getRangeAt(0);
-					    range.deleteContents();
-					    range.insertNode(span);
-					  
-					    var custom_hash_1 = Math.random().toString(36).slice(2);
-					    span.id = "cs-editing-" + custom_hash_1;
-					    
-					    return span.id;
-				},
-				test_action: function () {
-						alert("Here's a Test Action!");
-				}	
-		});
-
-		// A really lightweight plugin wrapper around the constructor,
-		// preventing against multiple instantiations
-		$.fn[ pluginName ] = function ( options ) {
-				return this.each(function() {
-						if ( !$.data( this, "plugin_" + pluginName ) ) {
-								$.data( this, "plugin_" + pluginName, new Plugin( this, options ) );
-						}
-				});
-		};
-
-})( jQuery, window, document );
+})(jQuery, window, document);
